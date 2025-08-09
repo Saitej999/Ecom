@@ -19,5 +19,5 @@ RUN ./mvnw clean package -DskipTests
 # Expose port
 EXPOSE 8080
 
-# Run the application with PORT environment variable
-CMD java -jar target/sb-ecom-0.0.1-SNAPSHOT.jar --server.port=${PORT:-8080}
+# Run the application - let Spring Boot handle port from environment
+CMD ["java", "-jar", "target/sb-ecom-0.0.1-SNAPSHOT.jar"]
