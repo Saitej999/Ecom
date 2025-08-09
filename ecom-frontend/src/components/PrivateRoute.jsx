@@ -8,15 +8,18 @@ const PrivateRoute = ({ publicPage = false, adminOnly = false }) => {
     const isSeller = user && user?.roles.includes("ROLE_SELLER");
     const location = useLocation();
     
-    console.log('PrivateRoute check:', {
-        location: location.pathname,
-        user: user,
-        userRoles: user?.roles,
-        isAdmin,
-        isSeller,
-        publicPage,
-        adminOnly
-    });
+    // Debug logging (can be removed in production)
+    if (process.env.NODE_ENV === 'development') {
+        console.log('PrivateRoute check:', {
+            location: location.pathname,
+            user: user ? 'User logged in' : 'No user',
+            userRoles: user?.roles,
+            isAdmin,
+            isSeller,
+            publicPage,
+            adminOnly
+        });
+    }
 
     if (publicPage) {
         return user ? <Navigate to="/" /> : <Outlet />
