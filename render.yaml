@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: ecom-backend
+    env: docker
+    rootDir: sb-ecom
+    buildCommand: ./mvnw clean package -DskipTests
+    startCommand: java -Dserver.port=$PORT -jar target/sb-ecom-0.0.1-SNAPSHOT.jar
+    plan: free
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: JWT_SECRET
+        value: mySecretKey123912738aopsgjnspkmndfsopkvajoirjg94gf2opfng2moknm
+      - key: JAVA_TOOL_OPTIONS
+        value: -Xmx512m
