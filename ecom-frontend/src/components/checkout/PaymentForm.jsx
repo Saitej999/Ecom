@@ -10,12 +10,24 @@ const PaymentForm = ({ clientSecret, totalPrice }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log('Payment form submitted');
+        console.log('VITE_FRONTEND_URL:', import.meta.env.VITE_FRONTEND_URL);
+        console.log('Return URL:', `${import.meta.env.VITE_FRONTEND_URL}/order-confirm`);
+        
         if (!stripe || !elements) {
+            console.log('Stripe or elements not available');
             return;
         }
 
         const { error: submitError } = await elements.submit();
+        
+        if (submitError) {
+            console.log('Submit error:', submitError);
+            setErrorMessage(submitError.message);
+            return false;
+        }
 
+        console.log('Confirming payment with clientSecret:', clientSecret);
         const { error } = await stripe.confirmPayment({
             elements,
             clientSecret,
@@ -25,9 +37,12 @@ const PaymentForm = ({ clientSecret, totalPrice }) => {
         });
 
         if (error) {
+            console.log('Payment error:', error);
             setErrorMessage(error.message);
             return false;
         }
+        
+        console.log('Payment submitted successfully');
     };
 
     const paymentElementOptions = {

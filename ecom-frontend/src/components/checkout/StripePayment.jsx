@@ -16,7 +16,12 @@ const StripePayment = () => {
   const { user, selectedUserCheckoutAddress } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (!clientSecret) {
+    console.log('StripePayment useEffect - clientSecret:', clientSecret);
+    console.log('User:', user);
+    console.log('Selected address:', selectedUserCheckoutAddress);
+    console.log('Total price:', totalPrice);
+    
+    if (!clientSecret && user && selectedUserCheckoutAddress && totalPrice > 0) {
     const sendData = {
       amount: Number(totalPrice) * 100,
       currency: "usd",
@@ -28,9 +33,10 @@ const StripePayment = () => {
         test: "1"
       }
     };
+      console.log('Creating Stripe payment secret with data:', sendData);
       dispatch(createStripePaymentSecret(sendData));
     }
-  }, [clientSecret]);
+  }, [clientSecret, user, selectedUserCheckoutAddress, totalPrice]);
 
   if (isLoading) {
     return (

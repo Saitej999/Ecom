@@ -27,6 +27,13 @@ public class ProductController {
         return new ResponseEntity<>(savedProductDTO, HttpStatus.CREATED);
     }
 
+    @PostMapping("/seller/categories/{categoryId}/product")
+    public ResponseEntity<ProductDTO> addProductSeller(@Valid @RequestBody ProductDTO productDTO,
+                                                 @PathVariable Long categoryId){
+        ProductDTO savedProductDTO = productService.addProduct(categoryId, productDTO);
+        return new ResponseEntity<>(savedProductDTO, HttpStatus.CREATED);
+    }
+
     @GetMapping("/public/products")
     public ResponseEntity<ProductResponse> getAllProducts(
             @RequestParam(name = "keyword", required = false) String keyword,
@@ -102,5 +109,25 @@ public class ProductController {
     ){
         ProductResponse productResponse = productService.getAllProductsForSeller(pageNumber, pageSize, sortBy, sortOrder);
         return new ResponseEntity<>(productResponse,HttpStatus.OK);
+    }
+
+    @PutMapping("/seller/products/{productId}")
+    public ResponseEntity<ProductDTO> updateProductSeller(@Valid @RequestBody ProductDTO productDTO,
+                                                    @PathVariable Long productId){
+        ProductDTO updatedProductDTO = productService.updateProduct(productId, productDTO);
+        return new ResponseEntity<>(updatedProductDTO, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/seller/products/{productId}")
+    public ResponseEntity<ProductDTO> deleteProductSeller(@PathVariable Long productId){
+        ProductDTO deletedProduct = productService.deleteProduct(productId);
+        return new ResponseEntity<>(deletedProduct, HttpStatus.OK);
+    }
+
+    @PutMapping("/seller/products/{productId}/image")
+    public ResponseEntity<ProductDTO> updateProductImageSeller(@PathVariable Long productId,
+                                                         @RequestParam("image")MultipartFile image) throws IOException {
+        ProductDTO updatedProduct = productService.updateProductImage(productId, image);
+        return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
     }
 }
