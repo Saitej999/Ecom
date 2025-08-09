@@ -47,6 +47,7 @@ const Checkout = () => {
     ];
     
     useEffect(() => {
+        console.log('Checkout component mounted, fetching user addresses...');
         dispatch(getUserAddresses());
     }, [dispatch]);
 

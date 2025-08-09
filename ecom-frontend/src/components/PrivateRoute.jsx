@@ -7,6 +7,16 @@ const PrivateRoute = ({ publicPage = false, adminOnly = false }) => {
     const isAdmin = user && user?.roles?.includes("ROLE_ADMIN");
     const isSeller = user && user?.roles.includes("ROLE_SELLER");
     const location = useLocation();
+    
+    console.log('PrivateRoute check:', {
+        location: location.pathname,
+        user: user,
+        userRoles: user?.roles,
+        isAdmin,
+        isSeller,
+        publicPage,
+        adminOnly
+    });
 
     if (publicPage) {
         return user ? <Navigate to="/" /> : <Outlet />

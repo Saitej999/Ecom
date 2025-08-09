@@ -239,11 +239,14 @@ export const getUserAddresses = () => async (dispatch, getState) => {
          });
         
         // If authentication error, redirect to login
+        // Temporarily disabled automatic redirect for debugging
+        /*
         if (error?.response?.status === 401 || error?.response?.status === 403) {
             dispatch({ type: "LOG_OUT" });
             localStorage.removeItem("auth");
             window.location.href = "/login";
         }
+        */
     }
 };
 
