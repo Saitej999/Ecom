@@ -268,8 +268,11 @@ Welcome to your complete Java Spring Boot eCommerce application! This guide will
 - Contact system administrator
 
 ### **Developer Information**
-- **Repository**: [https://github.com/Saitej999/Ecommerce](https://github.com/Saitej999/Ecommerce)
-- **Developer**: Saitej999
+- **Developer**: Saitej Sagi
+- **Email**: [saitejsagi999@gmail.com](mailto:saitejsagi999@gmail.com)
+- **Phone**: +1 (314) 886-1788
+- **Location**: St. Louis, MO, USA
+- **Repository**: [https://github.com/Saitej999/Ecom](https://github.com/Saitej999/Ecom)
 - **Technology Stack**: Java Spring Boot + React
 - **Payment Gateway**: Stripe
 

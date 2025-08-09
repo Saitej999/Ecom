@@ -16,7 +16,7 @@ This guide will help you deploy your eCommerce application with:
 3. Create new project
 
 ### 1.2 Deploy Backend
-1. Connect your GitHub repository
+1. Connect your GitHub repository: `Saitej999/Ecom`
 2. Select the `sb-ecom` folder as root directory
 3. Railway will automatically detect the Java application
 
@@ -46,7 +46,7 @@ SPRING_PROFILES_ACTIVE=prod
 2. Sign up with GitHub account
 
 ### 2.2 Deploy Frontend
-1. Import project from GitHub
+1. Import project from GitHub: `Saitej999/Ecom`
 2. Select `ecom-frontend` as root directory
 3. Framework preset: Vite
 4. Build command: `npm run build`
