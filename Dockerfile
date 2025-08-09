@@ -7,7 +7,11 @@ WORKDIR /app
 # Copy the Spring Boot project
 COPY sb-ecom ./
 
-# Make Maven wrapper executable
+# Copy startup script
+COPY start.sh ./
+RUN chmod +x start.sh
+
+# Make Maven wrapper executable  
 RUN chmod +x ./mvnw
 
 # Download dependencies
@@ -20,4 +24,4 @@ RUN ./mvnw clean package -DskipTests
 EXPOSE 8080
 
 # Run the application
-CMD ["java", "-Dserver.port=${PORT:-8080}", "-jar", "target/sb-ecom-0.0.1-SNAPSHOT.jar"]
+CMD ["./start.sh"]
