@@ -124,6 +124,11 @@ export const authenticateSignInUser
             const { data } = await api.post("/auth/signin", sendData);
             dispatch({ type: "LOGIN_USER", payload: data });
             localStorage.setItem("auth", JSON.stringify(data));
+            
+            // Clear cart data from previous user session
+            localStorage.removeItem("cartItems");
+            localStorage.removeItem("CHECKOUT_ADDRESS");
+            localStorage.removeItem("client-secret");
             reset();
             toast.success("Login Success");
             navigate("/");
@@ -155,7 +160,13 @@ export const registerNewUser
 
 export const logOutUser = (navigate) => (dispatch) => {
     dispatch({ type:"LOG_OUT" });
+    
+    // Clear all user-related data from localStorage
     localStorage.removeItem("auth");
+    localStorage.removeItem("cartItems");
+    localStorage.removeItem("CHECKOUT_ADDRESS");
+    localStorage.removeItem("client-secret");
+    
     navigate("/login");
 };
 
@@ -288,13 +299,26 @@ export const createStripePaymentSecret
     = (sendData) => async (dispatch, getState) => {
         try {
             dispatch({ type: "IS_FETCHING" });
+            console.log("Creating Stripe payment secret with data:", sendData);
+            
             const { data } = await api.post("/order/stripe-client-secret", sendData);
+            console.log("Stripe payment secret response:", data);
+            
             dispatch({ type: "CLIENT_SECRET", payload: data });
-              localStorage.setItem("client-secret", JSON.stringify(data));
-              dispatch({ type: "IS_SUCCESS" });
+            localStorage.setItem("client-secret", JSON.stringify(data));
+            dispatch({ type: "IS_SUCCESS" });
         } catch (error) {
-            console.log(error);
-            toast.error(error?.response?.data?.message || "Failed to create client secret");
+            console.error("Stripe payment secret error:", error);
+            console.error("Error response:", error?.response?.data);
+            
+            dispatch({ type: "IS_ERROR", payload: error?.response?.data?.message || "Failed to create client secret" });
+            
+            // If authentication error, redirect to login
+            if (error?.response?.status === 401 || error?.response?.status === 403) {
+                dispatch({ type: "LOG_OUT" });
+                localStorage.removeItem("auth");
+                window.location.href = "/login";
+            }
         }
 };
 
